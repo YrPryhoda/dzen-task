@@ -1,3 +1,4 @@
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   Body,
   Controller,
@@ -9,7 +10,11 @@ import {
   Param,
   ParseIntPipe,
   UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+
+import { CreateCommentDto } from '../../dto/comment/create.comment.dto';
+import { SharpPipe } from '../../common/pipes/sharp.pipe';
 
 @Controller('comment')
 export class CommentController {
@@ -34,10 +39,19 @@ export class CommentController {
   }
 
   @Post('create')
+  @UseInterceptors(FileInterceptor('file'))
   @UseInterceptors()
-  async createComment(@Body() data: any) {
+  async createComment(
+    @Body() data: CreateCommentDto,
+    @UploadedFile(SharpPipe) file: Express.Multer.File,
+  ) {
     try {
-      return data;
+      const createdComment = {
+        data,
+        file,
+      };
+
+      return createdComment;
     } catch (err: unknown) {
       const error = err as Error;
       throw new BadRequestException(error.message);
