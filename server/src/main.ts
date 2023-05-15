@@ -1,4 +1,7 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import * as ip from 'ip';
+
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -9,6 +12,11 @@ async function bootstrap() {
     methods: 'GET,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
   });
-  await app.listen(process.env.APP_PORT);
+  app.useGlobalPipes(new ValidationPipe());
+  app.listen(process.env.APP_PORT).then(() => {
+    console.log(
+      `App is running on http://${ip.address()}:${process.env.APP_PORT}`,
+    );
+  });
 }
 bootstrap();
