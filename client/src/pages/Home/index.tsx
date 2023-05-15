@@ -5,28 +5,44 @@ import arrowDownImg from '../../assets/images/down-arrow.svg';
 import arrowUpImg from '../../assets/images/up-arrow.svg';
 
 import { dateFormatter } from '../../common/helpers/date.formatter';
-import { CommentInterface } from '../../types/comment.interfaces';
 import { commentService } from '../../services/comment.service';
+import CreateComment from '../../components/CreateComment';
 import { Pagination } from '../../components/Pagination';
 import useFetch from '../../common/hooks/useFetch';
 import Loader from '../../components/Loader';
+import Modal from '../../components/Modal';
 import styles from './styles.module.scss';
+import {
+  CommentInterface,
+  CreateCommentInterface,
+} from '../../types/comment.interfaces';
 
 const ITEMS_PER_PAGE = 25;
 
 const Home = () => {
   const [searchParams] = useSearchParams();
-  const page = Number(searchParams.get('page') || 1);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [sortField, setSortField] = useState('createdAt');
   const [commentsCount, setCommentsCount] = useState(0);
   const [comments, setComments] = useState<null | CommentInterface[]>(null);
+  const [commentModalOpen, setCommentModalOpen] = useState(false);
 
   const handlerSortComments = async (sortField: string) => {
     setSortField(sortField);
     const newState = sortDirection === 'asc' ? 'desc' : 'asc';
     setSortDirection(newState);
   };
+
+  const handlerModalColse = () => setCommentModalOpen(false);
+
+  const pagesCount = useMemo(
+    () => Math.ceil(commentsCount / ITEMS_PER_PAGE),
+    [commentsCount],
+  );
+  const page = useMemo(
+    () => Number(searchParams.get('page') || 1),
+    [searchParams],
+  );
 
   const fatchFunc = useCallback(
     () =>
@@ -42,10 +58,36 @@ const Home = () => {
     comments: CommentInterface[];
     count: number;
   } | null>(fatchFunc);
-  const pagesCount = useMemo(
-    () => Math.ceil(commentsCount / ITEMS_PER_PAGE),
-    [commentsCount],
-  );
+
+  const addNewMessage = (comment: CommentInterface) => {
+    setComments((prev) => {
+      if (!prev) {
+        return null;
+      }
+
+      const isExist = prev.find((el) => el.id === comment.id);
+
+      if (isExist) {
+        return prev;
+      }
+
+      return [comment, ...prev];
+    });
+  };
+
+  const handlerCreateComment = async (comment: CreateCommentInterface) => {
+    try {
+      setLoading(true);
+      const newComment = await commentService.createComment(comment);
+      addNewMessage(newComment);
+    } catch (error) {
+      const err = error as Error;
+      alert(err.message);
+    } finally {
+      setLoading(false);
+      handlerModalColse();
+    }
+  };
 
   useEffect(() => {
     if (data) {
@@ -78,6 +120,11 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.btns}>
+        <button onClick={() => setCommentModalOpen(true)}>
+          Create comment
+        </button>
+      </div>
       <h2 className={styles.title}>Root comments list</h2>
       <div className={styles.table}>
         <table className={styles.list}>
@@ -144,6 +191,11 @@ const Home = () => {
           </tbody>
         </table>
       </div>
+      {commentModalOpen ? (
+        <Modal onClose={handlerModalColse}>
+          <CreateComment onSubmit={handlerCreateComment} />
+        </Modal>
+      ) : null}
       <div className={styles.pagination}>
         <Pagination totalCount={pagesCount} />
       </div>

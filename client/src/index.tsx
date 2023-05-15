@@ -2,6 +2,7 @@ import { RouterProvider } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import React from 'react';
 
+import "yet-another-react-lightbox/styles.css";
 import { router } from './router';
 import './common/styles/reset.css';
 

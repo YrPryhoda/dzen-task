@@ -3,14 +3,13 @@ import { useParams } from 'react-router-dom';
 
 import { commentService } from './../../services/comment.service';
 import useFetch from './../../common/hooks/useFetch';
+import Comment from '../../components/Comment';
+import Loader from '../../components/Loader';
+import styles from './styles.module.scss';
 import {
   CommentInterface,
   CreateCommentInterface,
 } from './../../types/comment.interfaces';
-
-import Comment from '../../components/Comment';
-import Loader from '../../components/Loader';
-import styles from './styles.module.scss';
 
 const CommentDetails = () => {
   const { commentId } = useParams();

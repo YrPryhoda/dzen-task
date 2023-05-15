@@ -10,6 +10,7 @@ import {
   CommentInterface,
   CreateCommentInterface,
 } from './../../types/comment.interfaces';
+import CreateComment from '../CreateComment';
 
 interface IProps {
   comment: CommentInterface;
@@ -19,7 +20,17 @@ interface IProps {
 
 const Comment = ({ comment, onCreateComment, mode = 'uploaded' }: IProps) => {
   const [isLightboxOpen, setLightboxOpen] = useState(false);
+  const [replyOpen, setReplyOpen] = useState(false);
   const handlerLightboxClose = () => setLightboxOpen(false);
+
+  const handlerCreateComment = async (comment: CreateCommentInterface) => {
+    if (!onCreateComment) {
+      return;
+    }
+    onCreateComment(comment).then(() => {
+      setReplyOpen(false);
+    });
+  };
 
   const renderImg = () => {
     if (!comment.upload) {
@@ -84,12 +95,17 @@ const Comment = ({ comment, onCreateComment, mode = 'uploaded' }: IProps) => {
         {withReply ? (
           <button
             className={styles.comment__replyBtn}
-            onClick={() => {}}
+            onClick={() => setReplyOpen(true)}
           >
             Reply
           </button>
         ) : null}
       </div>
+      {withReply && replyOpen ? (
+        <div className={styles.comment__replyBlock}>
+          <CreateComment parent={comment.id} onSubmit={handlerCreateComment} />
+        </div>
+      ) : null}
     </div>
   );
 };
