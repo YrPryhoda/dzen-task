@@ -1,0 +1,51 @@
+.comment {
+	display: flex;
+	flex-direction: column;
+	width: 620px;
+
+	&__header {
+		padding: 12px 24px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background-color: #eee;
+		border: 1px solid #ccc;
+	}
+
+	&__userInfo {
+		display: flex;
+		align-items: center;
+	}
+
+	&__avatar {
+		width: 54px;
+		aspect-ratio: 1/1;
+		margin-right: 20px;
+	}
+
+	&__text {
+		border: 2px solid #eee;
+		padding: 12px 24px;
+		min-height: 120px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	&__replyBtn {
+		align-self: flex-end;
+	}
+
+	&__replyBlock {
+		background-color: #fafafa;
+		margin-top: 10px;
+		padding: 10px 0;
+		border: 1px solid #ccc;
+	}
+
+	&__imgPreview {
+		cursor: pointer;
+		width: 150px;
+		height: auto;
+	}
+}
