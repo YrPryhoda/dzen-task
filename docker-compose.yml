@@ -1,0 +1,52 @@
+version: '2.1'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'homeroot1234@@'
+      MYSQL_DATABASE: 'dzen'
+    ports:
+      - 3306:3306
+    networks:
+      - my-network
+  redis:
+    container_name: redis
+    image: redis:alpine
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+    ports:
+      - 6379:6379
+    networks:
+      - my-network
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: server
+    restart: always
+    ports:
+      - 5000:5000
+    depends_on:
+      redis:
+        condition: service_healthy
+      mysql:
+        condition: service_started 
+    networks:
+      - my-network
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
+    networks:
+      - my-network
+networks:
+  my-network:
