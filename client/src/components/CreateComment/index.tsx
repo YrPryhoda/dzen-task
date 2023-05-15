@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { formValidation } from "./../../common/utils/form.validation";
-import { CreateCommentInterface } from "./../../types/comment.interfaces";
-import useForm from "./../../common/hooks/useForm";
-import styles from "./styles.module.scss";
-import Comment from "../Comment";
+import { CreateCommentInterface } from './../../types/comment.interfaces';
+import { formValidation } from './../../common/utils/form.validation';
+import useForm from './../../common/hooks/useForm';
+import styles from './styles.module.scss';
+import Comment from '../Comment';
 
 interface IProps {
   parent?: null | number;
@@ -12,16 +12,16 @@ interface IProps {
 }
 
 const initialForm = {
-  userName: "",
-  email: "",
-  text: ""
+  userName: '',
+  email: '',
+  text: '',
 };
 
 const CreateComment = ({ parent = null, onSubmit }: IProps) => {
-  const { form, onChange, resetForm } = useForm(initialForm);
-  const [file, setFile] = useState<File>();
-  const [commentPreview, setCommentPreview] = useState(false);
   const [formErrors, setFormErrors] = useState<null | string[]>(null);
+  const [commentPreview, setCommentPreview] = useState(false);
+  const { form, onChange } = useForm(initialForm);
+  const [file, setFile] = useState<File>();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -67,7 +67,7 @@ const CreateComment = ({ parent = null, onSubmit }: IProps) => {
   };
 
   const handlerFormChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setCommentPreview(false);
     setFormErrors(null);
@@ -154,7 +154,7 @@ const CreateComment = ({ parent = null, onSubmit }: IProps) => {
                     createdAt: new Date(),
                     updatedAt: new Date(),
                     mimeType: file.type,
-                    path: URL.createObjectURL(file)
+                    path: URL.createObjectURL(file),
                   }
                 : null,
               user: {
@@ -162,8 +162,8 @@ const CreateComment = ({ parent = null, onSubmit }: IProps) => {
                 userName: form.userName,
                 id: 1,
                 createdAt: new Date(),
-                updatedAt: new Date()
-              }
+                updatedAt: new Date(),
+              },
             }}
           />
         </div>
@@ -173,4 +173,3 @@ const CreateComment = ({ parent = null, onSubmit }: IProps) => {
 };
 
 export default CreateComment;
-

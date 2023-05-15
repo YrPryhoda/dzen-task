@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
 import { Pagination as PaginationRounded, Stack } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
+import React, { useMemo } from "react";
 
 interface IProps {
   totalCount: number;
@@ -14,7 +14,7 @@ export const Pagination = ({ totalCount = 1 }: IProps) => {
   );
 
   const handlerNavigation = (
-    event: React.ChangeEvent<unknown>,
+    _: React.ChangeEvent<unknown>,
     value: number
   ) => {
     setSearchParams({ page: value.toString() });

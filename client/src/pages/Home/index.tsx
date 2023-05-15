@@ -18,18 +18,22 @@ import {
 } from '../../types/comment.interfaces';
 
 const ITEMS_PER_PAGE = 25;
+const DESC = 'desc';
+const ASC = 'asc';
 
 const Home = () => {
-  const [searchParams] = useSearchParams();
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
-  const [sortField, setSortField] = useState('createdAt');
-  const [commentsCount, setCommentsCount] = useState(0);
+  const [sortDirection, setSortDirection] = useState<typeof DESC | typeof ASC>(
+    DESC,
+  );
   const [comments, setComments] = useState<null | CommentInterface[]>(null);
   const [commentModalOpen, setCommentModalOpen] = useState(false);
+  const [sortField, setSortField] = useState('createdAt');
+  const [commentsCount, setCommentsCount] = useState(0);
+  const [searchParams] = useSearchParams();
 
   const handlerSortComments = async (sortField: string) => {
     setSortField(sortField);
-    const newState = sortDirection === 'asc' ? 'desc' : 'asc';
+    const newState = sortDirection === ASC ? DESC : ASC;
     setSortDirection(newState);
   };
 
@@ -104,7 +108,7 @@ const Home = () => {
     return (
       <img
         alt="Detect Sort Column"
-        src={sortDirection === 'asc' ? arrowDownImg : arrowUpImg}
+        src={sortDirection === ASC ? arrowDownImg : arrowUpImg}
         className={styles.list__arrow}
       />
     );

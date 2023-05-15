@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
 import DownloadLink from 'react-download-link';
+import React, { useMemo, useState } from 'react';
 
 import { dateFormatter } from './../../common/helpers/date.formatter';
 import { fileDownload } from '../../common/helpers/file.download';
 import avatarImg from '../../assets/images/icon.webp';
+import CreateComment from '../CreateComment';
 import styles from './styles.module.scss';
 import Lightbox from '../Lightbox';
 import {
   CommentInterface,
   CreateCommentInterface,
 } from './../../types/comment.interfaces';
-import CreateComment from '../CreateComment';
 
 interface IProps {
   comment: CommentInterface;
@@ -78,7 +78,10 @@ const Comment = ({ comment, onCreateComment, mode = 'uploaded' }: IProps) => {
     return;
   };
 
-  const withReply = onCreateComment && mode === 'uploaded';
+  const withReply = useMemo(
+    () => onCreateComment && mode === 'uploaded',
+    [onCreateComment, mode],
+  );
 
   return (
     <div className={styles.comment}>

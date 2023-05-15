@@ -1,9 +1,9 @@
+import { errorService } from "./error.service";
 import {
   CommentInterface,
   CommentSortOptions,
   CreateCommentInterface
 } from "../types/comment.interfaces";
-import { errorService } from "./error.service";
 
 class CommentService {
   private readonly url = `${process.env.REACT_APP_WEB_URL}/api/comment`;

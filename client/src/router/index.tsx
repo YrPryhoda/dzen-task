@@ -6,9 +6,8 @@ import {
 
 import CommentDetails from '../pages/CommentDetails';
 import PageLayout from '../components/PageLayout';
-import Home from '../pages/Home';
-
 import { routes } from './routes';
+import Home from '../pages/Home';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
