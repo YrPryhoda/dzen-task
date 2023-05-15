@@ -35,7 +35,7 @@ GET 200
 	
 	/api/comment - Останні 25 коментарів і загальна їх кількість
 
-	Params: 
+	Query: 
 		skip?: number
 		sortField?: userName | email | createdAt
 		direction?: asc | desc
@@ -84,7 +84,7 @@ GET 200
 2. Замінити значення в файлі .env на :
 
 	* MYSQL_URL=127.0.0.1
-	* MYSQL_PASS= <ПАРОЛЬ ВЫД КОРИСТУВАЧА ROOT MYSQL>
+	* MYSQL_PASS= <ПАРОЛЬ ВІД КОРИСТУВАЧА ROOT MYSQL>
 	* REDIS_URL=127.0.0.1
 
 3. Створити нову базу даних в MySQL під назвою "dzen"
