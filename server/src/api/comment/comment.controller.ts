@@ -21,6 +21,7 @@ import { SortFieldValidationPipe } from '../../common/pipes/sort.field.pipe';
 import { ResponseCommentDto } from '../../dto/comment/response.comment.dto';
 import { CreateCommentDto } from '../../dto/comment/create.comment.dto';
 import { SharpPipe } from '../../common/pipes/sharp.pipe';
+import { WsService } from '../../modules/ws/ws.service';
 
 const ITEMS_PER_PAGE = 25;
 
@@ -28,6 +29,7 @@ const ITEMS_PER_PAGE = 25;
 export class CommentController {
   constructor(
     private readonly commentProducerService: CommentProducerService,
+    private readonly wsService: WsService,
   ) {}
 
   @Get('/')
@@ -85,7 +87,7 @@ export class CommentController {
       );
 
       const commentDto = new ResponseCommentDto(createdComment);
-
+      this.wsService.newCommentCreated(commentDto);
       return commentDto;
     } catch (err: unknown) {
       const error = err as Error;
