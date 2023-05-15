@@ -1,0 +1,17 @@
+.header {
+	padding: 18px;
+	background-color: rgb(9, 171, 28);
+	color: #fff;
+
+	&__logo {
+		cursor: pointer;
+		display: inline-block;
+		font-size: 24px;
+		font-weight: 700;
+		transition: all 0.4s;
+
+		&:hover {
+			color: rgb(237, 227, 117);
+		}
+	}
+}

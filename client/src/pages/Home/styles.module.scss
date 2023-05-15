@@ -1,0 +1,69 @@
+.container {
+	width: 100%;
+	padding: 12px 32px 32px 32px;
+}
+
+.btns {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 12px;
+}
+
+.table {
+	height: 50vh;
+	overflow: auto;
+	margin-bottom: 24px;
+}
+
+.title {
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 18px;
+}
+
+.list {
+	width: 100%;
+	min-width: 600px;
+	overflow: auto;
+	border-collapse: collapse;
+
+	&__row {
+		td {
+			border-bottom: 2px solid rgb(9, 171, 28);
+			padding-top: 12px;
+			padding-bottom: 6px;
+			text-align: center;
+		}
+	}
+
+	&__empty {
+		padding: 22px;
+		text-align: center;
+	}
+
+	&__sortColumn {
+		cursor: pointer;
+		font-weight: 800;
+		text-transform: uppercase;
+	}
+
+	&__arrow {
+		height: 18px;
+		aspect-ratio: 1/1;
+		margin-left: 5px;
+	}
+
+	&__text {
+		max-width: 35%;
+	}
+
+	&_break {
+		word-break: break-all;
+	}
+}
+
+.pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
