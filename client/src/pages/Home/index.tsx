@@ -12,6 +12,7 @@ import useFetch from '../../common/hooks/useFetch';
 import Loader from '../../components/Loader';
 import Modal from '../../components/Modal';
 import styles from './styles.module.scss';
+import { socket } from "../../config/ws";
 import {
   CommentInterface,
   CreateCommentInterface,
@@ -92,6 +93,14 @@ const Home = () => {
       handlerModalColse();
     }
   };
+
+	useEffect(() => {
+    socket.on("comments", addNewMessage);
+
+    return () => {
+      socket.off("comments");
+    };
+  }, []);
 
   useEffect(() => {
     if (data) {
