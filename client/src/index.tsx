@@ -1,5 +1,8 @@
-import React from 'react';
+import { RouterProvider } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
+import React from 'react';
+
+import { router } from './router';
 import './common/styles/reset.css';
 
 const root = ReactDOM.createRoot(
@@ -7,6 +10,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <div>Root</div>
+    <RouterProvider router={router} />
   </React.StrictMode>,
 );
