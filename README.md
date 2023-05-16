@@ -1,5 +1,8 @@
 # Тестове завдання від dzen studio
 
+## Demo
+http://docke-loadb-8r52xxw2p8b0-1042232020.eu-north-1.elb.amazonaws.com/
+
 ## Викристані технології
 
 ### Backend
